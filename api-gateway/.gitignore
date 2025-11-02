@@ -1,0 +1,16 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Environment
+.env
+
+# Docker override files
+docker-compose.override.yml
+
+# Build / temp
+build/
+tmp/
