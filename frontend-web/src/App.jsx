@@ -9,7 +9,8 @@ function App() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const API_URL = "http://localhost:8080";
+  // Las peticiones irán al servidor de Vite, que las redirigirá al api-gateway
+  const API_URL = import.meta.env.VITE_API_URL || "";
 
   // Cargar entradas del usuario actual
   useEffect(() => {

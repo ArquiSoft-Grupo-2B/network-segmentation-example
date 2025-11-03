@@ -8,6 +8,13 @@ export default defineConfig({
     host: true,
     // Allow requests coming from the Docker/container hostnames used in this compose setup
     // Add any additional hostnames your environment requires (e.g. api-gateway, frontend-web)
-    allowedHosts: ["frontend-web", "localhost"]
+    allowedHosts: ["frontend-web", "localhost"],
+    proxy: {
+      "/api": {
+        target: "http://api-gateway:8080",
+        changeOrigin: true,
+        secure: false,
+      },
+    },
   },
 });

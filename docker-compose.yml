@@ -8,6 +8,7 @@ services:
       - "5173:5173"
     networks:
       - frontend-net
+      - orchestration-net
     depends_on:
       - api-gateway
     restart: unless-stopped
@@ -17,10 +18,9 @@ services:
       context: ./api-gateway
       dockerfile: Dockerfile
     container_name: api-gateway
-    ports:
-      - "8080:8080"
+    expose:
+      - "8080"
     networks:
-      - frontend-net
       - orchestration-net
       - backend-net
     depends_on:
@@ -61,8 +61,8 @@ services:
   mongodb:
     image: mongo:latest
     container_name: mongodb
-    ports:
-      - "27017:27017"
+    expose:
+      - "27017"
     volumes:
       - mongo-data:/data/db
     networks:
@@ -76,8 +76,8 @@ services:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
       POSTGRES_DB: mydatabase
-    ports:
-      - "5432:5432"
+    expose:
+      - "5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
     networks:
@@ -97,12 +97,14 @@ networks:
 
   orchestration-net:
     driver: bridge
+    internal: true
     ipam:
       config:
         - subnet: 172.31.0.0/24
 
   backend-net:
     driver: bridge
+    internal: true
     ipam:
       config:
         - subnet: 172.32.0.0/24
